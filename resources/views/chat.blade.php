@@ -22,9 +22,11 @@
             <ul class="list-group" v-chat-scroll>
                 <message v-for="value in chat.message"
                 :key=value.index
+                color="success"
                 >
                 
-                @{{ value }}
+                          @{{ value }}
+      
                 </message>
 
               </ul>
