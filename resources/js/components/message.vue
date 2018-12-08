@@ -1,5 +1,8 @@
 <template>
-      <li class="list-group-item">Hello...</li>
+      <li class="list-group-item">
+            <slot>
+            </slot>
+      </li>
 </template>
 
 <script>

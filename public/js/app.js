@@ -13935,13 +13935,17 @@ Vue.component('message', __webpack_require__(48));
 var app = new Vue({
     el: '#app',
     data: {
-        message: ''
+        message: '',
+        chat: {
+            message: []
+        }
     },
 
     methods: {
         send: function send() {
             if (this.message.length != 0) {
-                console.log(this.message);
+                this.chat.message.push(this.message);
+                this.message = '';
             }
         }
     }
@@ -47532,6 +47536,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
@@ -47547,7 +47554,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", { staticClass: "list-group-item" }, [_vm._v("Hello...")])
+  return _c("li", { staticClass: "list-group-item" }, [_vm._t("default")], 2)
 }
 var staticRenderFns = []
 render._withStripped = true
