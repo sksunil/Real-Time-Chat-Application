@@ -40,5 +40,9 @@ class ChatController extends Controller
     {
       session()->put('chat', $request->chat);
     }
+
+    public function chatBox(){
+        return view('chatBox');
+    }
 }
 
