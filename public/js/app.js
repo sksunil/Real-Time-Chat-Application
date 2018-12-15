@@ -25049,7 +25049,8 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             color: [],
             time: []
         },
-        typing: ''
+        typing: '',
+        numberOfUsers: 0
     },
     watch: {
         message: function message() {
@@ -25072,6 +25073,13 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             } else {
                 _this.typing = '';
             }
+        });
+        Echo.join('chat').here(function (users) {
+            _this.numberOfUsers = users.length;
+        }).joining(function (user) {
+            _this.numberOfUsers += 1;
+        }).leaving(function (user) {
+            _this.numberOfUsers -= 1;
         });
     },
 
