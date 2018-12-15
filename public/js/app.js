@@ -25134,6 +25134,13 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        deleteSession: function deleteSession() {
+            var _this4 = this;
+
+            axios.post('/deleteSession').then(function (response) {
+                _this4.$toaster.success('Chat messages removed successfully.');
+            });
         }
     }
 });

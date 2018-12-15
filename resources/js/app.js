@@ -96,7 +96,6 @@ const app = new Vue({
             let time = new Date();
             return time.getHours() + ':' + time.getMinutes();
         },
-
         getOldMessages(){
             axios.post('/getOldMessages')
                 .then(response => {
@@ -108,6 +107,13 @@ const app = new Vue({
             .catch(error => {
                 console.log(error);
             })
+        },
+        deleteSession(){
+            axios.post('/deleteSession')
+                .then(response => {
+                this.$toaster.success('Chat messages removed successfully.');
+
+        })
         }
     }
 });

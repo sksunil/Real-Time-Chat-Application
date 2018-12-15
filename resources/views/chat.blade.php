@@ -21,6 +21,7 @@
              <span class="badge badge-pill badge-danger">
              @{{ numberOfUsers }}
              </span>
+                <a href="" class="btn btn-warning  btn-sm" @click.prevent="deleteSession">Clear Chat</a>
             </li>
             <div class="badge badge-pill badge-primary">@{{ typing }}</div>
 
@@ -41,6 +42,7 @@
 
             <input type="text" v-model="message" @keyup.enter='send'
                    class="form-control" placeholder="Write your message...">
+            <br>
 
         </div>
     </div>
