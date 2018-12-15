@@ -25,7 +25,8 @@
                          :key=value.index
                          color="success"
                          :user=chat.user[index]
-                         :color="chat.color[index]"
+                         :color=chat.color[index]
+                         :time=chat.time[index]
                 >
 
                     @{{ value }}
