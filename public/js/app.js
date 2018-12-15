@@ -25034,6 +25034,7 @@ __webpack_require__(14);
 window.Vue = __webpack_require__(11);
 
 
+
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_chat_scroll___default.a);
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('message', __webpack_require__(42));
@@ -25043,15 +25044,37 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     data: {
         message: '',
         chat: {
-            message: []
+            message: [],
+            user: [],
+            color: []
         }
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        Echo.private('chat').listen('ChatEvent', function (e) {
+            _this.chat.message.push(e.message);
+            _this.chat.color.push('warning');
+            _this.chat.user.push(e.user);
+        });
     },
 
     methods: {
         send: function send() {
+            var _this2 = this;
+
             if (this.message.length != 0) {
                 this.chat.message.push(this.message);
-                this.message = '';
+                this.chat.user.push('you');
+                this.chat.color.push('success');
+                axios.post('/send', {
+                    message: this.message
+                }).then(function (response) {
+                    console.log(response);
+                    _this2.message = '';
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
         }
     }
@@ -57702,7 +57725,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['color'],
+    props: ['color', 'user'],
 
     computed: {
         className: function className() {
@@ -57734,7 +57757,7 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("small", { staticClass: "badge float-right", class: _vm.badgeClass }, [
-      _vm._v("You")
+      _vm._v(_vm._s(_vm.user))
     ])
   ])
 }
