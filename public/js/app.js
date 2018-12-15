@@ -25068,11 +25068,19 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     mounted: function mounted() {
         var _this = this;
 
+        this.getOldMessages();
         Echo.private('chat').listen('ChatEvent', function (e) {
             _this.chat.message.push(e.message);
             _this.chat.color.push('warning');
             _this.chat.user.push(e.user);
             _this.chat.time.push(_this.getTime());
+            axios.post('/saveToSession', {
+                chat: _this.chat
+            }).then(function (response) {
+                console.log(response);
+            }).catch(function (error) {
+                console.log(error);
+            });
         }).listenForWhisper('typing', function (e) {
             if (e.name != '') {
                 _this.typing = 'typing...';
@@ -25101,7 +25109,8 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 this.chat.time.push(this.getTime());
                 this.chat.color.push('success');
                 axios.post('/send', {
-                    message: this.message
+                    message: this.message,
+                    chat: this.chat
                 }).then(function (response) {
                     console.log(response);
                     _this2.message = '';
@@ -25113,6 +25122,18 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         getTime: function getTime() {
             var time = new Date();
             return time.getHours() + ':' + time.getMinutes();
+        },
+        getOldMessages: function getOldMessages() {
+            var _this3 = this;
+
+            axios.post('/getOldMessages').then(function (response) {
+                console.log(response);
+                if (response.data != '') {
+                    _this3.chat = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
     }
 });

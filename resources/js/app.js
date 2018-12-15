@@ -32,12 +32,22 @@ const app = new Vue({
         }
     },
     mounted() {
+        this.getOldMessages();
         Echo.private('chat')
             .listen('ChatEvent',(e) => {
             this.chat.message.push(e.message);
             this.chat.color.push('warning');
             this.chat.user.push(e.user);
             this.chat.time.push(this.getTime());
+        axios.post('/saveToSession',{
+            chat : this.chat
+        })
+            .then(response => {
+            console.log(response);
+    })
+    .catch(error =>{
+            console.log(error);
+    });
            })
            .listenForWhisper('typing',(e) => {
                if(e.name != ''){
@@ -69,7 +79,8 @@ const app = new Vue({
                 this.chat.time.push(this.getTime());
                 this.chat.color.push('success');
                 axios.post('/send',{
-                    message : this.message
+                    message : this.message,
+                    chat : this.chat
                 })
                     .then(response => {
                         console.log(response);
@@ -84,6 +95,19 @@ const app = new Vue({
         getTime(){
             let time = new Date();
             return time.getHours() + ':' + time.getMinutes();
+        },
+
+        getOldMessages(){
+            axios.post('/getOldMessages')
+                .then(response => {
+                    console.log(response);
+                    if(response.data != ''){
+                        this.chat = response.data;
+                    }
+            })
+            .catch(error => {
+                console.log(error);
+            })
         }
     }
 });
